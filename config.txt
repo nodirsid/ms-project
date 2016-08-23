@@ -4,7 +4,7 @@
 #2 - Dijkstra for Geographic Networks
 #3 - Dijkstra with Edge Flags
 #4 - Bidirectional Dijkstra with Edge Flags
-algorithm=2
+algorithm=3
 
 #define graph partitioning type
 #0-rectangular
@@ -18,11 +18,11 @@ partitioning_type=0
 edge_flag_calc_method=1
 
 #define the number of rows (first number) and columns (second number) used by rectangular graph partitioning method
-rows=5
-columns=7
+rows=10
+columns=10
 
 #define the upper bound (max vertices per quadrant) used by quad-tree based graph partitioning method
-max_vertices_per_quadrant=5
+max_vertices_per_quadrant=8
 
 #define the upper bound (max vertices per region) used by kd-tree based graph partitioning method
 max_vertices_per_region=5

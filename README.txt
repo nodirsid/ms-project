@@ -2,132 +2,60 @@
 * Shortest path algorithms for geographical networks
 * https://github.com/nodirsid/ms-project
 
-* Created by:   $Author: Nodirjon Siddikov $
+* Created by: Nodirjon Siddikov
 ------------------------------------------------------------
+INTRO
 
-Shortest path algorithms for geographical networks
-Contents:
+This is a README file for shortest path algorithms which were developed as part of MSc Project titled "Shortest path algorithms for geographical networks". Algorithms are grouped into IntelliJ IDEA solution to simplify organization, compilation, execution and testing of algorithms. The solution contains the following shortest path algorithms:
 - Dijkstra’s algorithm
 - Bidirectional version of Dijkstra’s algorithm
-- Dijkstra’s algorithm based on heuristics
+- Dijkstra’s algorithm for geographical networks (uses heuristics)
 - Dijkstra’s algorithm with edge flags
 - Bidirectional version of Dijkstra’s algorithm with edge flags
 - Query generator
 
-August 26, 2016
-
-(C) 2016 Nodirjon Siddikov
 
 -------------------------------------------------------------
-REPOSITORY STRUCTURE
+SOLUTION STRUCTURE
 
-  - README.txt: this file
-
-  - src : source code for shortest path algorithms (.java files)
-
-  - input : input data necessary for algorithms to run
-            graph file (.gr), coordinate files (.co), p2p query files (.p2p) are stored in this directory
-
-  - results : performance measurement files for each algorithm is generated here
-
-  - out : compiled source code files for algorithms (.class files)
-
-  - config.txt : configuration parameters of algorithms are defined in this file; necessary to run algorithms
-
+- README.txt: this file
+- src: source code for shortest path algorithms and their accompanying files (.java files)
+- input: input data necessary for algorithms to run; graph file (.gr), coordinate files (.co), p2p query files (.p2p) are stored in this directory
+- results: performance report files for each algorithm is generated here; report files are generated for preprocessing (.p2p.p.res files) and querying (.p2p.q.res files) operations
+- out: compiled source code files for algorithms and other accompanying Java files (.class files)
+- config.txt : configuration parameters of algorithms are defined in this file; necessary to run algorithms
+  
 
 -------------------------------------------------------------
 SOFTWARE REQUIREMENTS
 
-In order compile and execute algorithms, the following software is necessary:
+In order to sucessfully compile and execute algorithms, the following software is necessary:
 - Operating system: Windows 10
-- Java Software Development Kit (JDK) version 1.8
+- Java software development kit (JDK) version 1.8
 - Text editing software such as Notepad
-- Optional: IntelliJ IDEA development environment
+- Optional: IntelliJ IDEA development environment; using IntelliJ IDEA is highly recommended, since it helps maintain references to Java libraries and environment variables, and simplifies the compilation, execution and organization of Java files
 
 -------------------------------------------------------------
-HOW TO COMPILE THE SOLUTION
+1) HOW TO COMPILE AND RUN THE SOLUTION
 
-To compile the solution with IntelliJ IDEA, you have to:
+To compile the solution with IntelliJ IDEA, first "Algorithm" should be selected from IntelliJ IDEA configuration dropdown box. This will set Main.java class as startup file of the solution. Once selected, input arguments should be supplied to the class file by typing them into "Program arguments" textbox. The order of arguments are as follows:
+1. Graph file (.gr). The road network will be built from edges supplied in this file
+2. Node coordinate file (.co). Nodes in the graph will be enriched with longitude/latitude information which are supplied in this file
+3. Query file (.p2p). Algorithms start execution by reading query pairs from this file. Each query pair starts new instance of shortest path algorithm.
+After providing Main.java with input files, next step is to supply the solution with runtime values through configuration file (config.txt). This file is self-explanatory and lets the user set algorithm type, graph partitioning type, and other parameters. In the end, "Run" button should be hit to start calculation of shortest paths. Necessary configurations for algorithms will be read during runtime from config.txt file. If algorithms sucessfully finish their execution, a set of output files will be produced and stored in "results" directory. These are performance report files which contain values for the metrics (such as query time, number of nodes scanned, etc.) used to compare algorithms. The type of output depends on the type of algorithm. Algorithms which only have querying step produce one file which is performance report for queries (.p2p.q.res files). Algorithms which have both preprocessing and querying steps produce two files: one performance report file for preprocessing (.p2p.p.res files) and one performance report file for queries (.p2p.q.res files). Sample execution of Main.java file from command line looks as follows:
 
-1) open the solution with IntelliJ IDEA development environment
-2) choose "Algorithm" from configurations list
-3) click play button to execute the code
+java Main FLA.gr FLA.co FLA_queries.rand.p2p
+
+The execution of algorithms can be further be controlled by changing parameter values in configuration file. For example, to partition a graph with quad trees where each quadrant contain no more than 50 nodes, "max_vertices_per_quadrant" parameter should be set to 50. 
 
 -------------------------------------------------------------
 2) HOW TO GENERATE QUERY FILES
 
-To build the core instances, just type 'make gen'. This will create in
-directory ch9/inputs all problem families. Those include both
-synthetic and real-world instances. Synthetic instances are built
-by the generators located in the ch9/gens directory. Real-world instances
-are downloaded from the Challenge server running on www.dis.uniroma1.it.
+Two types of query files can be generated: local and random. To generate either type of query files, first "QueryGenerator" should be selected from IntelliJ IDEA configuration dropdown box. This will set QueryGenerator.java class as startup file of the solution. Once selected, input arguments should be supplied to the class file by typing them into "Program arguments" textbox. The order of arguments are as follows:
+1. Query type (0=local query, 1=random query)
+2. Number of query pairs (i.e. 1000)
+3. Radius (in meters); this parameter is effective when local query pairs need to be generated; all nodes which are within radius of source node are considered to be local
+4. Node coordinate file (.co); query pairs will be randomly selected from set of nodes supplied in this file. 
+After feeding the QueryGenerator.java with parameters, "Run" button should be hit on IntelliJ IDEA. The generated query pairs will be stored in "input" directory of the solution. For example, local query file for NY graph file will be NY_queries.loc.p2p, and random query pairs for FLA graph will be FLA_queries.rand.p2p. Sample execution of QueryGenerator.java file from command line looks as follows:
 
-To run 'make gen', you must have built the package first 
-(see section HOW TO COMPILE THE CODE above).
-
-INSTALL NOTES: 
-
-* the platform building process may take a while, especially to generate 
-  local query files for p2p problems. Please be patient. 
-
-* to install real-world core families, the 'make gen' command 
-  requires that you are connected to the Internet and can run ftp.
-  The installer assumes your ftp program can use the http protocol.
-  Old versions of ftp do not support http and may not work: for instance, 
-  this happens with some releases of Cygwin. In this case, you have to 
-  download files manually with an http client from:
-
-  http://www.dis.uniroma1.it/~challenge9/data/USA-road-d
-  http://www.dis.uniroma1.it/~challenge9/data/USA-road-t
-
-  Downloaded files should be put in ch9/inputs/USA-road-d and in
-  ch9/inputs/USA-road-t.
-
-* core instances require around 11GB of free disk space
-  (5.2GB for real-world families USA-road-d and USA-road-t).
-
-IMPORTANT NOTICE: 
-
-Building and running the whole package may require several hours.
-If you are only interested in a specific problem, you can generate only 
-instances for that problem. If you are only interested in the ss 
-problem, you can type:
-
-'make gen_gr' to create the graphs (both synthetic and real-world)
-'make gen_ss' to create the synthetic ss instances
-
-If you are only interested in the p2p problem, you can type:
-
-'make gen_gr' to create the synthetic graphs
-'make gen_p2p' to create the synthetic p2p instances (this may take a while)
-
-You can refine your control over the building process even further.
-For instance, if you wish to generate graphs in the USA-road-d family and 
-the related problem instances only, you can go to ch9/scripts and type:
-
-'perl genUSA-road-d.gr.pl'      (download graphs from the server)
-'perl genUSA-road-d.ss.pl'      (generate ss problem instances)
-'perl genUSA-road-d.rnd.p2p.pl' (generate random query pairs)
-'perl genUSA-road-d.loc.p2p.pl' (generate local query pairs)
-
-Please refer to ch9/scripts/README.txt for further information about 
-customizing the instance generation.
-
--------------------------------------------------------------
-3) HOW TO RUN THE CORE EXPERIMENTS
-
-To run the benchmark solvers on all core input families, type
-'make run'. You must have created all core instances first. 
-Performance report files are generated in the ch9/results directory.
-
-If you are only interested in the ss problem, you can type:
-'make run_ss'. If you are only interested in the p2p problem, you 
-can type: 'make run_p2p'. 
-
-You can refine your control over the running process even further.
-For instance, if you wish to run ss experiments on graphs in the 
-USA-road-d family only, you can go to ch9/scripts and type:
-'perl runUSA-road-d.ss.pl'.
-
-Please refer to ch9/scripts/README.txt for further information about
-running only selected experiments.
+java QueryGenerator 0 1000 5000 COL.co

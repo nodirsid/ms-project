@@ -74,7 +74,7 @@ public class Dijkstra{
     //overloaded constructor (used by edge flag algorithm)
     //no need to keep stats
     public Dijkstra(Graph g, Vertex src, int id){
-        System.out.println("Dijkstra's algorithm running for preprocessing..." + id);
+        System.out.println("Edge flag calculation using Dijkstra..." + id);
 
         d=new HashMap<Vertex, Integer>(); //distance vector - shortest distance estimate from source to a particular vertex
         parent=new HashMap<Vertex, Vertex>(); //parent vector
