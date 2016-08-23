@@ -1,0 +1,28 @@
+# define algorithm type
+#0 - Dijkstra
+#1 - Bidirectional Dijkstra
+#2 - Dijkstra for Geographic Networks
+#3 - Dijkstra with Edge Flags
+#4 - Bidirectional Dijkstra with Edge Flags
+algorithm=2
+
+#define graph partitioning type
+#0-rectangular
+#1-quad tree based
+#2-kd tree based
+partitioning_type=0
+
+#define edge flag calculating method
+#0 - naive (run Dijkstra on all nodes of reverse graph)
+#1 - enhanced (run Dijkstra only on boundary nodes of reverse graph)
+edge_flag_calc_method=1
+
+#define the number of rows (first number) and columns (second number) used by rectangular graph partitioning method
+rows=5
+columns=7
+
+#define the upper bound (max vertices per quadrant) used by quad-tree based graph partitioning method
+max_vertices_per_quadrant=5
+
+#define the upper bound (max vertices per region) used by kd-tree based graph partitioning method
+max_vertices_per_region=5
