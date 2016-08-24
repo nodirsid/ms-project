@@ -10,7 +10,7 @@ algorithm=3
 #0-rectangular
 #1-quad tree based
 #2-kd tree based
-partitioning_type=0
+partitioning_type=1
 
 #define edge flag calculating method
 #0 - naive (run Dijkstra on all nodes of reverse graph)
@@ -22,7 +22,7 @@ rows=10
 columns=10
 
 #define the upper bound (max vertices per quadrant) used by quad-tree based graph partitioning method
-max_vertices_per_quadrant=8
+max_vertices_per_quadrant=10000
 
 #define the upper bound (max vertices per region) used by kd-tree based graph partitioning method
 max_vertices_per_region=5

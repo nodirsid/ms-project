@@ -732,16 +732,23 @@ public class Graph {
 
 
     //preprocessing operation
-    public int preprocess(StatsForPreprocessing statsPrep){
-        int noOfPrepNodeScans=0;
-        File edgeFlagData=null;
-        if(!reverseGraph)
-            edgeFlagData=new File(".//input//edgeFlagData.txt");
-        else
-            edgeFlagData=new File(".//input//edgeFlagDataRev.txt");
-
+    public void preprocess(StatsForPreprocessing statsPrep){
         //if the graph is NOT preprocessed
         if(!preProcessed){
+
+            System.out.println("Preprocessing started");
+            long prepStartTime, prepEndTime;
+
+            //mark start of prep
+            prepStartTime=System.nanoTime();
+
+            int noOfPrepNodeScans=0;
+            File edgeFlagData=null;
+            if(!reverseGraph)
+                edgeFlagData=new File(".//input//edgeFlagData.txt");
+            else
+                edgeFlagData=new File(".//input//edgeFlagDataRev.txt");
+
             if(edgeFlagData.exists()){
                 partitionGraph();
                 readEdgeFlagsFromFile(edgeFlagData);
@@ -760,9 +767,13 @@ public class Graph {
                 preProcessed=true;
                 statsPrep.setReadFromFile(false);
             }
+
+            //mark end of prep
+            prepEndTime=System.nanoTime();
+            statsPrep.setPrepExecTime(prepEndTime-prepStartTime);
+            statsPrep.setNoOfNodesScanned(noOfPrepNodeScans);
+
+            System.out.println("Preprocessing ended");
         }
-
-
-        return noOfPrepNodeScans;
     }
 }

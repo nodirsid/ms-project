@@ -20,7 +20,7 @@ public class StatsForPreprocessing {
     }
 
     public void setNoOfNodesScanned(int noOfNodesScanned) {
-        this.noOfNodesScanned = noOfNodesScanned;
+        this.noOfNodesScanned += noOfNodesScanned;
     }
 
     public void setReadFromFile(boolean readFromFile) {

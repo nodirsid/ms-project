@@ -12,13 +12,10 @@ public class DijkstraBidirectionalWithEdgeFlags{
 
     private MinPriorityQueue minPQ_f; //nodes in priority queue for forward search
     private MinPriorityQueue minPQ_b; //nodes in priority queue for backward search
-
     private Map<Vertex, Vertex> parent_f; //parent nodes for forward search
     private Map<Vertex, Vertex> parent_b; //parent nodes for backward search
-
     private Map<Vertex, Integer> d_f; //shortest path estimate for forward
     private Map<Vertex, Integer> d_b; //shortest path estimate for backward
-
     private Vertex commonVertex; //the vertex where forward and backward Dijkstra algorithms meet
 
     //stats
@@ -28,8 +25,6 @@ public class DijkstraBidirectionalWithEdgeFlags{
     private int noOfArcScans=0;
     private int noOfDistImprovements=0;  //number of effective relax operations
     private long qryStartTime, qryEndTime;
-    private int noOfPrepNodeScans=0;
-    private long prepStartTime, prepEndTime;
 
     //g - graph with weighted edges
     //v - source vertex
@@ -43,24 +38,11 @@ public class DijkstraBidirectionalWithEdgeFlags{
         parent_b=new HashMap<Vertex, Vertex>();
         settledNodes=new HashSet<Vertex>();
 
-        //PRE-PROCESSING STEP
-        System.out.println("Preprocessing started");
-
         //stats
         statsPrep=new StatsForPreprocessing();
-        //mark start of preprocessing
-        prepStartTime=System.nanoTime();
 
-        noOfPrepNodeScans += g.preprocess(statsPrep);
-        noOfPrepNodeScans += revGraph.preprocess(statsPrep);
-
-        //mark end of preprocessing
-        prepEndTime=System.nanoTime();
-        statsPrep.setPrepExecTime(prepEndTime-prepStartTime);
-        statsPrep.setNoOfNodesScanned(noOfPrepNodeScans);
-
-        System.out.println("Preprocessing ended");
-
+        g.preprocess(statsPrep);
+        revGraph.preprocess(statsPrep);
 
         //SHORTEST PATH CALCULATION STEP
         int target_region=dest.getRegion(); //get the region ID where destination node belongs to (to be used by forward Dijkstra algorithm)
@@ -300,7 +282,7 @@ public class DijkstraBidirectionalWithEdgeFlags{
             System.out.println("Total shortest path estimate from src to dest: " + (getShortestPathEstimateForward(commonVertex) + getShortestPathEstimateBackward(commonVertex)));
             System.out.println("Graph partitioning method: " + getGraphPartitioningMethod());
             System.out.println("Edge flag calculation method: " + getEdgeFlagCalculationMethod());
-            System.out.println("Number of preprocessed nodes: " + noOfPrepNodeScans);
+            System.out.println("Number of preprocessed nodes: " + statsPrep.getNoOfNodesScanned());
             System.out.println("Total number of effective relax operations: " + noOfDistImprovements);
 
             for (Edge e : getPathToForward(g,commonVertex)) {

@@ -20,8 +20,7 @@ public class DijkstraWithEdgeFlags{
     private int noOfArcScans=0;
     private int noOfDistImprovements=0; //number of effective relax operations
     private long qryStartTime, qryEndTime;
-    private int noOfPrepNodeScans=0;
-    private long prepStartTime, prepEndTime;
+
 
     //g - graph with weighted edges
     //v - source vertex
@@ -33,23 +32,9 @@ public class DijkstraWithEdgeFlags{
         parent=new HashMap<Vertex, Vertex>(); //parent vector
         settledNodes=new HashSet<Vertex>();
 
-        //PRE-PROCESSING STEP
-        System.out.println("Preprocessing started");
-
         //stats
         statsPrep=new StatsForPreprocessing();
-
-        //mark start of prep
-        prepStartTime=System.nanoTime();
-
-        noOfPrepNodeScans= g.preprocess(statsPrep);
-
-        //mark end of prep
-        prepEndTime=System.nanoTime();
-        statsPrep.setPrepExecTime(prepEndTime-prepStartTime);
-        statsPrep.setNoOfNodesScanned(noOfPrepNodeScans);
-
-        System.out.println("Preprocessing ended");
+        g.preprocess(statsPrep);
 
 
         //SHORTEST PATH CALCULATION STEP
@@ -209,7 +194,7 @@ public class DijkstraWithEdgeFlags{
             System.out.println("Shortest path estimate: " + getShortestPathEstimate(dest));
             System.out.println("Graph partitioning method: " + getGraphPartitioningMethod());
             System.out.println("Edge flag calculation method: " + getEdgeFlagCalculationMethod());
-            System.out.println("Number of preprocessed nodes: " + noOfPrepNodeScans);
+            System.out.println("Number of preprocessed nodes: " + statsPrep.getNoOfNodesScanned());
             System.out.println("Total number of effective relax operations: " + noOfDistImprovements);
 
             for (Edge e : getPathTo(g,dest)) {
