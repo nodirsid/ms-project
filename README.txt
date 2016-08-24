@@ -1,8 +1,11 @@
 ------------------------------------------------------------
 * Shortest path algorithms for geographical networks
 * https://github.com/nodirsid/ms-project
-
-* Created by: Nodirjon Siddikov
+*
+* I verify that I am the sole author of the programs contained in this folder, except where explicitly stated to the contrary
+*
+* Nodirjon Siddikov
+* 26 August 2016
 ------------------------------------------------------------
 INTRO
 
@@ -15,15 +18,20 @@ This is a README file for shortest path algorithms which were developed as part 
 - Bidirectional version of Dijkstra’s algorithm with edge flags
 - Query generator
 
+Input files (i.e. graph and coordinate files) for above algorithms were obtained from the following sources:
+
+- DIMACS Challenge (for USA road networks): http://www.dis.uniroma1.it/challenge9/download.shtml
+- OSM Project (for Germany road networks): http://i11www.iti.uni-karlsruhe.de/resources/roadgraphs.php
+
 
 -------------------------------------------------------------
 SOLUTION STRUCTURE
 
-- README.txt: this file
-- src: source code for shortest path algorithms and their accompanying files (.java files)
-- input: input data necessary for algorithms to run; graph file (.gr), coordinate files (.co), p2p query files (.p2p) are stored in this directory
-- results: performance report files for each algorithm is generated here; report files are generated for preprocessing (.p2p.p.res files) and querying (.p2p.q.res files) operations
-- out: compiled source code files for algorithms and other accompanying Java files (.class files)
+- README.txt : this file
+- /src : source code for shortest path algorithms and their accompanying files (.java files)
+- /input : input data necessary for algorithms to run; graph file (.gr), coordinate files (.co), p2p query files (.p2p) are stored in this directory
+- /results : performance report files for each algorithm is generated here; report files are generated for preprocessing (.p2p.p.res files) and querying (.p2p.q.res files) operations
+- /out : compiled source code files for algorithms and other accompanying Java files (.class files)
 - config.txt : configuration parameters of algorithms are defined in this file; necessary to run algorithms
   
 
