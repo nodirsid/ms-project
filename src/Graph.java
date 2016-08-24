@@ -16,6 +16,7 @@ public class Graph {
     private List<Region> regions;
     private Set<Vertex> boundaryNodes;
     private boolean reverseGraph;
+    private boolean preProcessed;
 
     //initialize graph by reading data about nodes, edges and edge weights
     public Graph(Scanner in) {
@@ -739,22 +740,28 @@ public class Graph {
         else
             edgeFlagData=new File(".//input//edgeFlagDataRev.txt");
 
+        //if the graph is NOT preprocessed
+        if(!preProcessed){
+            if(edgeFlagData.exists()){
+                partitionGraph();
+                readEdgeFlagsFromFile(edgeFlagData);
+                preProcessed=true;
+                statsPrep.setReadFromFile(true);
+            }else{ //if the graph is NOT preprocessed but there is no edge flag data available, then do preprocessing and write edge flag data into file system
 
-        if(edgeFlagData.exists()){
-            readEdgeFlagsFromFile(edgeFlagData);
-            statsPrep.setReadFromFile(true);
-        }else{
+                //step 1: partition the graph into regions
+                partitionGraph();
 
-            //step 1: partition the graph into regions
-            partitionGraph();
+                //step 2: calculate edge flags
+                noOfPrepNodeScans=calculateEdgeFlags();
 
-            //step 2: calculate edge flags
-            noOfPrepNodeScans=calculateEdgeFlags();
-
-            //write preprocessed data to disk
-            writeEdgeFlagsIntoFile(edgeFlagData);
-            statsPrep.setReadFromFile(false);
+                //write preprocessed data to disk
+                writeEdgeFlagsIntoFile(edgeFlagData);
+                preProcessed=true;
+                statsPrep.setReadFromFile(false);
+            }
         }
+
 
         return noOfPrepNodeScans;
     }
