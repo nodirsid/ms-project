@@ -34,6 +34,15 @@ public class Graph {
         this.E=g.E();
         this.initializeGraph();
 
+        //copy node coordinates from original graph
+        for(int nodeId=1;nodeId<=this.V;nodeId++){
+            Vertex vOrig = g.getVertices().get(nodeId);
+            Vertex vCopy=this.getVertices().get(nodeId);
+            vCopy.setLongitude(vOrig.getLongitude());
+            vCopy.setLatitude(vOrig.getLatitude());
+        }
+
+        //add reverse edges
         for(Edge e: g.getEdges()){
             this.addEdge(e.generateReverseEdge());
         }
